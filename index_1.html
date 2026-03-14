@@ -139,52 +139,35 @@
 
             <!-- Application Timelines -->
             <section id="timelines-section" class="scroll-mt-24">
-                <div class="flex items-center justify-between mb-4">
+                <div class="mb-4">
                     <h3 class="text-[16px] font-semibold text-primary">Application Timelines</h3>
-                    <p class="text-[13px] text-secondary">Compare critical dates across universities.</p>
+                    <p class="text-[13px] text-secondary">Track important dates for each university.</p>
                 </div>
-                <div class="bg-card border border-edge rounded-xl shadow-soft overflow-hidden">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse whitespace-nowrap">
-                            <thead>
-                                <tr
-                                    class="bg-appbg/50 border-b border-edge text-[12px] text-secondary uppercase tracking-wider">
-                                    <th class="px-6 py-3 font-medium">University</th>
-                                    <th class="px-6 py-3 font-medium">App Opens</th>
-                                    <th class="px-6 py-3 font-medium">App Deadline</th>
-                                    <th class="px-6 py-3 font-medium">Doc Deadline</th>
-                                    <th class="px-6 py-3 font-medium">Results</th>
-                                </tr>
-                            </thead>
-                            <tbody id="appTimelinesBody" class="divide-y divide-edge"></tbody>
-                        </table>
+                <div class="bg-card border border-edge rounded-xl shadow-soft">
+                    <div id="timelinesContainer"
+                        class="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-edge">
+                        <!-- Populated dynamically via JS -->
                     </div>
                 </div>
             </section>
 
-            <!-- Global Document Tracker (Streamlined Single Column) -->
+            <!-- Global Document Tracker -->
             <section id="global-docs" class="scroll-mt-24">
-                <div class="flex items-end justify-between mb-4">
+                <div class="flex items-center justify-between mb-4">
                     <div>
                         <h3 class="text-[16px] font-semibold text-primary">Global Documents</h3>
                         <p class="text-[13px] text-secondary mt-1">Core documents mapped across all applications.</p>
                     </div>
-                    <div class="text-right w-32">
-                        <span id="globalDocsCounter" class="text-[12px] font-medium text-primary block mb-1.5">0 of 0
-                            ready</span>
-                        <div class="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                            <div id="globalDocsProgressBar" class="h-full bg-accent rounded-full progress-bar"
-                                style="width: 0%"></div>
-                        </div>
-                    </div>
+                    <span id="globalDocsCounter"
+                        class="text-[12px] font-medium text-secondary bg-white border border-edge shadow-sm px-3 py-1 rounded-full">0
+                        of 0 Ready</span>
                 </div>
-                <!-- Reduced padding, simple list format -->
                 <div class="bg-card border border-edge rounded-xl shadow-soft p-1.5">
                     <ul id="globalDocsList" class="flex flex-col"></ul>
                 </div>
             </section>
 
-            <!-- Card 2: Combined Specific Documents -->
+            <!-- University Specific Documents -->
             <section id="specific-docs" class="scroll-mt-24">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-[16px] font-semibold text-primary">University-Specific Documents</h3>
@@ -442,11 +425,6 @@
             return Math.ceil((target - CURRENT_DATE) / (1000 * 60 * 60 * 24));
         }
 
-        function formatDate(dateValue) {
-            const date = new Date(dateValue + 'T00:00:00');
-            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-        }
-
         function calculateAge(dateValue) {
             const birth = new Date(dateValue + 'T00:00:00');
             const today = new Date();
@@ -529,29 +507,69 @@
 
         // Renders
         function renderAppTimelines() {
-            const tbody = document.getElementById('appTimelinesBody');
-            tbody.innerHTML = state.universities.map(uni => {
-                const getDate = (id) => {
-                    const e = uni.timeline.find(t => t.id === id);
-                    return e ? formatDate(e.date) : '-';
-                };
+            const container = document.getElementById('timelinesContainer');
+            container.innerHTML = state.universities.map(uni => {
+                // Find the index of the first event that hasn't passed yet
+                const nextEventIndex = uni.timeline.findIndex(e => getDaysUntil(e.date) >= 0);
 
-                const deadlineEvt = uni.timeline.find(t => t.id === 'app_deadline');
-                const isUrgent = deadlineEvt && getDaysUntil(deadlineEvt.date) < 14 && !uni.submitted;
+                const timelineHtml = uni.timeline.map((event, idx) => {
+                    const days = getDaysUntil(event.date);
+                    const isPast = days < 0;
+                    const isNext = idx === nextEventIndex;
+
+                    const d = new Date(event.date + 'T00:00:00');
+                    const monthStr = d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+                    const dayStr = d.toLocaleDateString('en-US', { day: '2-digit' });
+
+                    return `
+                        <div class="flex items-center gap-4 ${idx !== uni.timeline.length - 1 ? 'mb-5' : ''}">
+                            <!-- Calendar Block -->
+                            <div class="w-[50px] h-[50px] rounded-[14px] flex flex-col items-center justify-center shrink-0 transition-all ${isPast ? 'bg-gray-50/50 border border-gray-100 text-gray-400' :
+                            isNext ? 'bg-accent text-white shadow-md shadow-accent/20' :
+                                'bg-white text-primary border border-gray-200 shadow-sm'
+                        }">
+                                <span class="text-[9px] font-bold uppercase tracking-widest leading-none mb-1 ${isPast ? 'text-gray-400' :
+                            isNext ? 'text-white/80' :
+                                'text-secondary'
+                        }">${monthStr}</span>
+                                <span class="text-[16px] font-black leading-none">${dayStr}</span>
+                            </div>
+
+                            <!-- Event Details -->
+                            <div class="flex-1 min-w-0">
+                                <div class="text-[13px] ${isPast ? 'font-medium text-gray-400' :
+                            isNext ? 'font-bold text-primary' :
+                                'font-medium text-primary'
+                        } truncate">
+                                    ${event.label}
+                                </div>
+                                <div class="mt-1 flex items-center">
+                                    ${isNext ?
+                            `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-accent/10 text-accent text-[11px] font-bold tracking-wide">
+                                            ${days === 0 ? 'Due Today' : `${days} Days Left`}
+                                        </span>`
+                            :
+                            `<span class="text-[11px] font-medium ${isPast ? 'text-gray-300' : 'text-secondary'}">${d.getFullYear()}</span>`
+                        }
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
 
                 return `
-                    <tr class="hover:bg-gray-50/50 transition-colors ${uni.submitted ? 'opacity-50 grayscale-[30%]' : ''}">
-                        <td class="px-6 py-4">
+                    <div class="p-6 flex flex-col h-full hover:bg-gray-50/30 transition-colors">
+                        <div class="flex items-center justify-between mb-6 pb-4 border-b border-edge">
                             <div class="flex items-center gap-2">
-                                <span class="font-semibold text-[13px] text-primary">${uni.shortName}</span>
-                                ${uni.submitted ? '<i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-success"></i>' : ''}
+                                <h4 class="text-[15px] font-bold text-primary">${uni.shortName}</h4>
+                                ${uni.submitted ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-success/10 text-success border border-success/20 uppercase tracking-wide">Submitted</span>' : ''}
                             </div>
-                        </td>
-                        <td class="px-6 py-4 text-[13px] text-secondary">${getDate('open')}</td>
-                        <td class="px-6 py-4 text-[13px] ${isUrgent ? 'text-danger font-semibold' : 'text-primary font-medium'}">${getDate('app_deadline')}</td>
-                        <td class="px-6 py-4 text-[13px] text-secondary">${getDate('doc_deadline')}</td>
-                        <td class="px-6 py-4 text-[13px] text-secondary">${getDate('results')}</td>
-                    </tr>
+                            <span class="text-[10px] text-secondary font-bold uppercase tracking-widest">Schedule</span>
+                        </div>
+                        <div class="flex flex-col">
+                            ${timelineHtml}
+                        </div>
+                    </div>
                 `;
             }).join('');
         }
@@ -562,9 +580,7 @@
 
             const total = state.globalDocs.length;
             const prepared = state.globalDocs.filter(d => d.completed).length;
-
-            document.getElementById('globalDocsCounter').textContent = `${prepared} of ${total} ready`;
-            document.getElementById('globalDocsProgressBar').style.width = `${total === 0 ? 0 : (prepared / total) * 100}%`;
+            document.getElementById('globalDocsCounter').textContent = `${prepared} of ${total} Ready`;
 
             if (filtered.length === 0) {
                 list.innerHTML = `<li class="p-4 text-[13px] text-secondary text-center">No matches found.</li>`;
@@ -572,12 +588,13 @@
             }
 
             list.innerHTML = filtered.map(doc => `
-                <label class="group flex items-center gap-3 px-3 py-2.5 hover:bg-appbg/80 rounded-lg cursor-pointer transition-colors select-none">
-                    <div class="relative flex items-center justify-center w-[18px] h-[18px] rounded-[4px] border ${doc.completed ? 'bg-accent border-accent' : 'bg-white border-gray-300 group-hover:border-accent'} transition-colors shrink-0">
+                <label class="group flex items-center gap-3 px-3 py-3 hover:bg-accent/5 rounded-lg cursor-pointer transition-all select-none border border-transparent hover:border-accent/20">
+                    <div class="relative flex items-center justify-center w-5 h-5 rounded-md border-2 ${doc.completed ? 'bg-success border-success' : 'bg-white border-gray-300 group-hover:border-accent'} transition-all shrink-0 shadow-sm">
                         <input type="checkbox" class="absolute opacity-0 w-full h-full cursor-pointer" ${doc.completed ? 'checked' : ''} onchange="toggleGlobalDocument('${doc.id}', this.checked)">
                         ${doc.completed ? '<i data-lucide="check" class="w-3 h-3 text-white"></i>' : ''}
                     </div>
-                    <span class="text-[13px] ${doc.completed ? 'text-secondary line-through' : 'text-primary font-medium'}">${doc.label}</span>
+                    <span class="text-[14px] ${doc.completed ? 'text-gray-400 line-through' : 'text-primary'}">${doc.label}</span>
+                    <span class="ml-auto text-[11px] font-medium ${doc.completed ? 'text-success' : 'text-gray-400'}">${doc.completed ? 'Ready' : 'Pending'}</span>
                 </label>
             `).join('');
         }
@@ -590,12 +607,12 @@
                 const total = uni.documents.length;
 
                 const docsHtml = visible.map(doc => `
-                    <label class="group flex items-center gap-3 px-2 py-2.5 hover:bg-appbg/80 rounded-lg cursor-pointer transition-colors select-none ${uni.submitted ? 'pointer-events-none opacity-60' : ''}">
-                        <div class="relative flex items-center justify-center w-[18px] h-[18px] rounded-[4px] border ${doc.completed ? 'bg-accent border-accent' : 'bg-white border-gray-300 group-hover:border-accent'} transition-colors shrink-0">
-                            <input type="checkbox" class="sr-only" ${doc.completed ? 'checked' : ''} onchange="toggleSpecificDocument('${uni.id}', '${doc.id}', this.checked)">
+                    <label class="group flex items-center gap-3 px-3 py-3 hover:bg-accent/5 rounded-lg cursor-pointer transition-all select-none border border-transparent hover:border-accent/20 ${uni.submitted ? 'pointer-events-none opacity-60' : ''}">
+                        <div class="relative flex items-center justify-center w-5 h-5 rounded-md border-2 ${doc.completed ? 'bg-success border-success' : 'bg-white border-gray-300 group-hover:border-accent'} transition-all shrink-0 shadow-sm">
+                            <input type="checkbox" class="absolute opacity-0 w-full h-full cursor-pointer" ${doc.completed ? 'checked' : ''} onchange="toggleSpecificDocument('${uni.id}', '${doc.id}', this.checked)">
                             ${doc.completed ? '<i data-lucide="check" class="w-3 h-3 text-white"></i>' : ''}
                         </div>
-                        <span class="text-[13px] ${doc.completed ? 'text-secondary line-through' : 'text-primary'} truncate">${doc.label}</span>
+                        <span class="text-[14px] ${doc.completed ? 'text-gray-400 line-through' : 'text-primary'} truncate">${doc.label}</span>
                     </label>
                 `).join('');
 
@@ -731,6 +748,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            window.scrollTo(0, 0);
             state = loadState();
             attachUIListeners();
             render();

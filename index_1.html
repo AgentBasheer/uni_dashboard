@@ -9,35 +9,54 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        appbg: '#F7F7F6',
-                        card: '#FFFFFF',
-                        edge: '#E5E7EB',
-                        primary: '#111827',
-                        secondary: '#6B7280',
-                        accent: '#2563EB',
-                        success: '#16A34A',
-                        warning: '#D97706',
-                        danger: '#DC2626',
+                        appbg: 'var(--appbg)',
+                        card: 'var(--card)',
+                        edge: 'var(--edge)',
+                        primary: 'var(--primary)',
+                        secondary: 'var(--secondary)',
+                        muted: 'var(--text-3)',
+                        accent: 'var(--accent)',
+                        'accent-soft': 'var(--accent-soft)',
+                        success: 'var(--success)',
+                        warning: 'var(--warning)',
+                        danger: 'var(--danger)',
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Manrope', 'sans-serif'],
                     },
                     boxShadow: {
-                        soft: '0 1px 3px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.01)',
-                        hover: '0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02)',
+                        soft: 'var(--shadow-soft)',
+                        hover: 'var(--shadow-hover)',
                     }
                 }
             }
         };
     </script>
     <style>
+        :root {
+            --appbg: #F7F7F6;
+            --card: #FFFFFF;
+            --edge: #E5E7EB;
+            --primary: #1E293B;
+            --secondary: #64748B;
+            --text-3: #94A3B8;
+            --accent: #3B82F6;
+            --accent-soft: rgba(59, 130, 246, 0.1);
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.01);
+            --shadow-hover: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+            --sidebar-hover: #F3F4F6;
+        }
+
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -48,12 +67,13 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #E5E7EB;
+            background: var(--edge);
             border-radius: 10px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: #D1D5DB;
+            background: var(--secondary);
+            opacity: 0.5;
         }
 
         .progress-bar {
@@ -74,156 +94,130 @@
             </div>
         </div>
 
-        <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-            <div class="pt-4 pb-1 px-3 text-[11px] font-semibold text-secondary uppercase tracking-wider">Planning</div>
+        <nav class="flex-1 px-3 py-6 overflow-y-auto">
+            <div class="flex flex-col divide-y divide-edge/40">
+                <a href="#timelines-section"
+                    class="flex items-center gap-3 px-4 py-3 text-[13px] font-medium text-secondary hover:bg-sidebar-hover hover:text-primary transition-all">
+                    <i data-lucide="calendar-days" class="w-4 h-4"></i> Master Timelines
+                </a>
 
-            <a href="#timelines-section"
-                class="flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-medium text-secondary hover:bg-gray-100 hover:text-primary transition-all">
-                <i data-lucide="calendar-days" class="w-4 h-4"></i> Master Timelines
-            </a>
+                <a href="#global-docs"
+                    class="flex items-center gap-3 px-4 py-3 text-[13px] font-medium text-secondary hover:bg-sidebar-hover hover:text-primary transition-all">
+                    <i data-lucide="layers" class="w-4 h-4"></i> Global Documents
+                </a>
 
-            <div class="pt-4 pb-1 px-3 text-[11px] font-semibold text-secondary uppercase tracking-wider">Requirements
+                <a href="#specific-docs"
+                    class="flex items-center gap-3 px-4 py-3 text-[13px] font-medium text-secondary hover:bg-sidebar-hover hover:text-primary transition-all">
+                    <i data-lucide="file-check-2" class="w-4 h-4"></i> Specific Documents
+                </a>
+
+                <a href="#quick-access"
+                    class="flex items-center gap-3 px-4 py-3 text-[13px] font-medium text-secondary hover:bg-sidebar-hover hover:text-primary transition-all">
+                    <i data-lucide="link" class="w-4 h-4"></i> Links & Notes
+                </a>
             </div>
-            <a href="#global-docs"
-                class="flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-medium text-secondary hover:bg-gray-100 hover:text-primary transition-all">
-                <i data-lucide="layers" class="w-4 h-4"></i> Global Documents
-            </a>
-            <a href="#specific-docs"
-                class="flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-medium text-secondary hover:bg-gray-100 hover:text-primary transition-all">
-                <i data-lucide="file-check-2" class="w-4 h-4"></i> Specific Documents
-            </a>
-
-            <div class="pt-4 pb-1 px-3 text-[11px] font-semibold text-secondary uppercase tracking-wider">Execution
-            </div>
-            <a href="#quick-access"
-                class="flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-medium text-secondary hover:bg-gray-100 hover:text-primary transition-all">
-                <i data-lucide="link" class="w-4 h-4"></i> Links & Notes
-            </a>
         </nav>
+
+        <!-- Countdowns / Milestones -->
+        <div class="px-4 pb-4">
+             <div class="px-1 text-[10px] font-bold text-secondary uppercase tracking-widest mb-3 opacity-70">Upcoming Deadlines</div>
+             <div id="sidebarCountdowns" class="space-y-2"></div>
+        </div>
+        
+        <!-- Date at bottom -->
+        <div class="p-4 border-t border-edge/30">
+            <div class="text-[12px] text-secondary font-medium flex items-center gap-2 px-2"
+                id="currentDateDisplay">
+                <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+            </div>
+        </div>
     </aside>
 
     <!-- Main Content -->
     <main class="flex-1 flex flex-col min-w-0 h-full relative overflow-y-auto scroll-smooth">
         <header
-            class="h-[60px] flex items-center justify-between px-8 border-b border-edge bg-white/60 backdrop-blur-md sticky top-0 z-10 shrink-0">
-            <h1 class="text-[15px] font-medium text-primary">Command Center</h1>
+            class="h-[60px] flex items-center px-8 border-b border-edge bg-card sticky top-0 z-10 shrink-0 gap-8">
 
-            <div class="flex items-center gap-4">
-                <div class="text-[13px] text-secondary font-medium mr-4 flex items-center gap-2"
-                    id="currentDateDisplay">
-                    <i data-lucide="clock" class="w-4 h-4"></i>
+            <div class="flex-1 flex justify-center max-w-[560px] mx-auto">
+                <div class="relative w-full group">
+                    <i data-lucide="search"
+                        class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-secondary group-focus-within:text-accent transition-colors"></i>
+                    <input id="searchInput" type="text" placeholder="Search university or document..."
+                        class="w-full rounded-lg border border-edge bg-appbg pl-10 pr-4 py-2 text-[13px] text-primary placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-accent focus:bg-card transition-all">
                 </div>
-                <div class="relative">
-                    <button id="searchToggleButton" type="button" aria-controls="searchPopover" aria-expanded="false"
-                        class="w-9 h-9 rounded-full border border-edge bg-appbg text-secondary hover:bg-white hover:text-primary hover:shadow-soft transition-all focus:outline-none flex items-center justify-center">
-                        <i data-lucide="search" class="w-4 h-4"></i>
-                    </button>
-                    <div id="searchPopover"
-                        class="absolute right-0 top-12 w-[280px] rounded-xl border border-edge bg-white p-2 shadow-soft opacity-0 pointer-events-none translate-y-1 transition-all duration-200">
-                        <label class="relative block group">
-                            <i data-lucide="search"
-                                class="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-secondary group-focus-within:text-accent transition-colors"></i>
-                            <input id="searchInput" type="text" placeholder="Search documents..."
-                                class="w-full rounded-lg border border-edge bg-appbg pl-9 pr-3 py-2 text-[13px] text-primary placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-accent focus:bg-white transition-all">
-                        </label>
-                    </div>
-                </div>
-                <div class="flex items-center border-l border-edge pl-4">
-                    <button id="profileToggleButton" type="button"
-                        class="w-9 h-9 rounded-full border border-edge bg-appbg text-primary hover:bg-white hover:shadow-soft transition-all focus:outline-none flex items-center justify-center text-[12px] font-semibold tracking-wide">AM</button>
-                </div>
+            </div>
+
+            <div class="flex items-center border-l border-edge pl-4 shrink-0">
             </div>
         </header>
 
         <div class="p-8 max-w-[1160px] mx-auto flex flex-col gap-10 pb-20 w-full">
 
-            <!-- Application Timelines -->
-            <section id="timelines-section" class="scroll-mt-24">
-                <div class="mb-4">
-                    <h3 class="text-[16px] font-semibold text-primary">Application Timelines</h3>
-                    <p class="text-[13px] text-secondary">Track important dates for each university.</p>
-                </div>
-                <div class="bg-card border border-edge rounded-xl shadow-soft">
-                    <div id="timelinesContainer"
-                        class="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-edge">
-                        <!-- Populated dynamically via JS -->
-                    </div>
-                </div>
-            </section>
-
-            <!-- Global Document Tracker -->
-            <section id="global-docs" class="scroll-mt-24">
-                <div class="flex items-center justify-between mb-4">
-                    <div>
-                        <h3 class="text-[16px] font-semibold text-primary">Global Documents</h3>
-                        <p class="text-[13px] text-secondary mt-1">Core documents mapped across all applications.</p>
-                    </div>
-                    <span id="globalDocsCounter"
-                        class="text-[12px] font-medium text-secondary bg-white border border-edge shadow-sm px-3 py-1 rounded-full">0
-                        of 0 Ready</span>
-                </div>
-                <div class="bg-card border border-edge rounded-xl shadow-soft p-1.5">
-                    <ul id="globalDocsList" class="flex flex-col"></ul>
-                </div>
-            </section>
-
-            <!-- University Specific Documents -->
-            <section id="specific-docs" class="scroll-mt-24">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-[16px] font-semibold text-primary">University-Specific Documents</h3>
-                    <p class="text-[13px] text-secondary">Unique requirements separated by institution.</p>
-                </div>
-                <div class="bg-card border border-edge rounded-xl shadow-soft">
-                    <div id="specificDocsContainer"
-                        class="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-edge">
-                        <!-- Populated dynamically via JS -->
-                    </div>
-                </div>
-            </section>
-
             <!-- Quick Access & Notes Row -->
-            <section id="quick-access" class="scroll-mt-24 pt-4">
+            <section id="quick-access" class="scroll-mt-24">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-[16px] font-semibold text-primary">Quick Access & Notes</h3>
-                    <p class="text-[13px] text-secondary">Portals, saved IDs, and submission controls.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-5" id="quickAccessContainer">
                     <!-- Populated dynamically via JS -->
                 </div>
             </section>
 
+            <!-- Combined Document Tracker -->
+            <section id="global-docs" class="scroll-mt-24">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-[16px] font-semibold text-primary">Documents Repository</h3>
+                    </div>
+                </div>
+                <div class="bg-card border border-edge rounded-xl shadow-soft divide-y divide-edge/30">
+                    <!-- Global Section -->
+                    <div class="p-1.5">
+                        <div class="px-5 py-3 flex items-center justify-between">
+                            <h4 class="text-[14px] font-bold text-primary flex items-center gap-2">
+                                <i data-lucide="layers" class="w-4 h-4 text-secondary"></i> Global Documents
+                            </h4>
+                            <span id="globalDocsCounter" class="text-[11px] font-bold px-2 py-0.5 bg-appbg rounded-full text-secondary border border-edge/50">0 of 0 Ready</span>
+                        </div>
+                        <ul id="globalDocsList" class="flex flex-col"></ul>
+                    </div>
+
+                    <!-- Specific Section -->
+                    <div id="specificDocsContainer"
+                        class="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-edge/30">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Application Timelines -->
+            <section id="timelines-section" class="scroll-mt-24">
+                <div class="mb-4">
+                    <h3 class="text-[16px] font-semibold text-primary">Application Timelines</h3>
+                </div>
+                <div class="bg-card border border-edge rounded-xl shadow-soft">
+                    <div id="timelinesContainer"
+                        class="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-edge/30">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </div>
+            </section>
+
         </div>
     </main>
 
-    <!-- Profile Slide-Over -->
-    <div id="profileOverlay"
-        class="fixed inset-0 bg-primary/20 opacity-0 pointer-events-none transition-opacity duration-200 z-30"></div>
+    <!-- Profile Sidebar (Right) -->
     <aside id="profilePanel"
-        class="fixed top-0 right-0 h-full w-full max-w-[340px] bg-appbg border-l border-edge shadow-2xl translate-x-full transition-transform duration-300 z-40 flex flex-col">
+        class="w-[340px] bg-appbg border-l border-edge flex flex-col shrink-0 z-20">
         <div
-            class="h-[60px] px-6 border-b border-edge bg-white/80 backdrop-blur-md flex items-center justify-between shrink-0">
-            <div class="flex items-center gap-2">
-                <i data-lucide="user" class="w-4 h-4 text-secondary"></i>
-                <span class="text-[14px] font-medium text-primary">Applicant Profile</span>
+            class="h-[60px] px-6 border-b border-edge bg-white/80 backdrop-blur-md flex items-center shrink-0">
+            <div class="flex items-center gap-2 min-w-0">
+                <h2 id="profileName" class="text-[14px] font-bold text-primary truncate"></h2>
+                <span class="w-1 h-1 rounded-full bg-edge shrink-0"></span>
+                <p id="profileSubtitle" class="text-[12px] font-medium text-secondary truncate"></p>
             </div>
-            <button id="profileCloseButton" type="button"
-                class="w-8 h-8 rounded-full text-secondary hover:text-primary hover:bg-gray-200 flex items-center justify-center focus:outline-none">
-                <i data-lucide="x" class="w-4 h-4"></i>
-            </button>
         </div>
         <div class="flex-1 overflow-y-auto p-6 space-y-8">
-            <!-- Header -->
-            <div class="flex items-center gap-4">
-                <div
-                    class="w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center text-[18px] font-medium tracking-tight shrink-0 shadow-sm">
-                    AM
-                </div>
-                <div class="min-w-0">
-                    <h2 id="profileName" class="text-[16px] font-semibold text-primary truncate"></h2>
-                    <p id="profileSubtitle" class="text-[13px] text-secondary mt-0.5 truncate"></p>
-                </div>
-            </div>
-
             <div class="space-y-6">
                 <!-- Academic Record -->
                 <section>
@@ -234,20 +228,12 @@
                             <span class="text-[13px] text-secondary" id="profileSscLabel">SSC</span>
                             <span class="text-[13px] font-medium text-primary" id="profileSscResult"></span>
                         </div>
-                        <div class="px-4 py-3 flex justify-between items-center">
+                        <div class="px-4 py-3 flex justify-between items-center border-b border-edge">
                             <span class="text-[13px] text-secondary" id="profileHsscLabel">HSSC</span>
                             <span class="text-[13px] font-medium text-primary" id="profileHsscResult"></span>
                         </div>
-                    </div>
-                </section>
-
-                <!-- Qualifications -->
-                <section>
-                    <h3 class="text-[11px] font-semibold text-secondary uppercase tracking-wider mb-3">Qualifications
-                    </h3>
-                    <div class="bg-card border border-edge rounded-xl shadow-soft overflow-hidden">
                         <div class="px-4 py-3 flex justify-between items-center">
-                            <span class="text-[13px] text-secondary">English</span>
+                            <span class="text-[13px] text-secondary">English Proficiency</span>
                             <span class="text-[13px] font-medium text-primary" id="profileEnglishStat"></span>
                         </div>
                     </div>
@@ -307,7 +293,7 @@
         const CURRENT_DATE = today;
 
         document.getElementById('currentDateDisplay').innerHTML = `
-            <i data-lucide="clock" class="w-4 h-4"></i> ${CURRENT_DATE.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            <i data-lucide="clock" class="w-3.5 h-3.5"></i> ${CURRENT_DATE.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
         `;
 
         function escapeHtml(unsafe) {
@@ -316,11 +302,13 @@
 
         // Blueprints
         const globalDocsBlueprint = [
-            { id: 'passport', label: 'Valid Passport Copy', category: 'identity' },
-            { id: 'transcripts', label: 'Academic Transcripts (Apostilled)', category: 'academic' },
-            { id: 'graduation-certificate', label: 'Graduation Certificate', category: 'academic' },
-            { id: 'recommendation-letters', label: 'Recommendation Letters (x2)', category: 'academic' },
-            { id: 'language-certificate', label: 'Language Certificate (IELTS / TOPIK)', category: 'academic' }
+            { id: 'passport-applicant', label: 'Applicant’s Passport (Bio-data Page)', category: 'identity' },
+            { id: 'passport-parents', label: 'Parents’ Passports or National ID Copies', category: 'identity' },
+            { id: 'academic-transcripts', label: 'Official Academic Transcripts (Apostilled)', category: 'academic' },
+            { id: 'academic-certificates', label: 'Graduation Certificates / Diplomas (Apostilled)', category: 'academic' },
+            { id: 'ielts-trf', label: 'IELTS Official Test Report Form (Score Card)', category: 'language' },
+            { id: 'frc-pakistan', label: 'Family Registration Certificate (FRC/Family Proof)', category: 'identity' },
+            { id: 'bank-balance', label: 'Bank Balance Certificate (Min. 16,000,000 KRW)', category: 'financial' }
         ];
 
         const universityBlueprint = [
@@ -336,47 +324,52 @@
                     { id: 'results', label: 'Result Announcement', date: '2026-05-10' }
                 ],
                 documents: [
-                    { id: 'bank-balance-proof', label: 'Bank Balance Proof ($20,000)', category: 'financial' },
-                    { id: 'financial-statement', label: 'Financial Statement Form', category: 'financial' },
+                    { id: 'financial-statement', label: 'Financial Statement Form (JBNU)', category: 'financial' },
                     { id: 'statement-of-purpose', label: 'JBNU Statement of Purpose', category: 'academic' }
                 ]
             },
             {
                 id: 'cnu',
-                name: 'Chungnam National University',
+                name: 'Chonnam National University',
                 shortName: 'CNU',
-                links: { portal: 'https://apply.cnu.ac.kr', guidelines: 'https://cnu.ac.kr/guidelines.pdf' },
+                links: { portal: 'https://ipsi2.uwayapply.com/2026/foreign/jnu/?CHA=2', guidelines: 'https://international.jnu.ac.kr/Data/tmpfiles/download/2026/260211-ad-en.pdf' },
                 timeline: [
-                    { id: 'open', label: 'Application Opens', date: '2026-03-15' },
-                    { id: 'app_deadline', label: 'Application Deadline', date: '2026-04-10' },
-                    { id: 'doc_deadline', label: 'Document Submission', date: '2026-04-15' },
-                    { id: 'results', label: 'Result Announcement', date: '2026-05-20' }
+                    { id: 'open', label: 'Online Application (Uway)', date: '2026-04-01' },
+                    { id: 'app_deadline', label: 'Online App Deadline', date: '2026-04-07' },
+                    { id: 'doc_deadline', label: 'Physical Doc Submission', date: '2026-04-24' },
+                    { id: 'evaluation', label: 'Evaluation Period', date: '2026-05-18' },
+                    { id: 'results', label: 'Admission Results', date: '2026-06-12' },
+                    { id: 'tuition', label: 'Tuition & Visa Issuance', date: '2026-07-15' }
                 ],
                 documents: [
-                    { id: 'proof-of-funds', label: 'Proof of Funds (CNU Form)', category: 'financial' },
-                    { id: 'bank-statement', label: 'Bank Statement ($18,000)', category: 'financial' },
-                    { id: 'study-plan', label: 'Detailed Study Plan', category: 'academic' }
+                    { id: 'uway-application', label: 'Online Application (Uway Printout)', category: 'administrative' },
+                    { id: 'cnu-form1', label: 'Form 1 — Financial Guarantee Statement', category: 'financial' },
+                    { id: 'cnu-form2', label: 'Form 2 — Educational Background Info', category: 'academic' },
+                    { id: 'cnu-form3', label: 'Form 3 — Statement of Unusual Academics', category: 'academic' },
+                    { id: 'cnu-form4', label: 'Form 4 — Diploma & Transcript Release', category: 'academic' },
+                    { id: 'cnu-form5', label: 'Form 5 — Nationality Information', category: 'identity' },
+                    { id: 'cnu-form6', label: 'Form 6 — Personal Information Consent', category: 'administrative' }
                 ]
             },
             {
                 id: 'knu',
-                name: 'Kyungpook National University',
+                name: 'Kangwon National University',
                 shortName: 'KNU',
-                links: { portal: 'https://apply.knu.ac.kr', guidelines: 'https://knu.ac.kr/guidelines.pdf' },
+                links: { portal: 'https://www.kangwon.ac.kr/english', guidelines: 'https://www.kangwon.ac.kr/english/selectBbsNttList.do?bbsNo=424&key=1392' },
                 timeline: [
-                    { id: 'open', label: 'Application Opens', date: '2026-04-01' },
-                    { id: 'app_deadline', label: 'Application Deadline', date: '2026-05-05' },
-                    { id: 'doc_deadline', label: 'Document Submission', date: '2026-05-10' },
-                    { id: 'results', label: 'Result Announcement', date: '2026-06-15' }
+                    { id: 'open', label: 'Application Opens (Round 1)', date: '2026-04-06' },
+                    { id: 'app_deadline', label: 'Application Deadline', date: '2026-04-17' },
+                    { id: 'doc_deadline', label: 'Document Submission', date: '2026-04-24' },
+                    { id: 'results', label: 'Result Announcement', date: '2026-06-30' }
                 ],
                 documents: [
-                    { id: 'sponsor-letter', label: 'Financial Sponsor Letter', category: 'financial' },
-                    { id: 'financial-guarantee', label: 'Financial Guarantee Form', category: 'financial' },
-                    { id: 'bank-balance-proof', label: 'Bank Balance Proof ($18,000)', category: 'financial' }
+                    { id: 'statement-fin-support', label: 'Statement of Financial Support', category: 'financial' },
+                    { id: 'study-plan-intro', label: 'Study Plan & Personal Introduction', category: 'academic' },
+                    { id: 'family-relation-cert', label: 'Family Relation Certificate (Translated)', category: 'identity' }
                 ]
             }
         ];
-
+        
         let state = { globalDocs: [], universities: [] };
 
         function createDefaultState() {
@@ -524,32 +517,32 @@
                     return `
                         <div class="flex items-center gap-4 ${idx !== uni.timeline.length - 1 ? 'mb-5' : ''}">
                             <!-- Calendar Block -->
-                            <div class="w-[50px] h-[50px] rounded-[14px] flex flex-col items-center justify-center shrink-0 transition-all ${isPast ? 'bg-gray-50/50 border border-gray-100 text-gray-400' :
-                            isNext ? 'bg-accent text-white shadow-md shadow-accent/20' :
-                                'bg-white text-primary border border-gray-200 shadow-sm'
+                            <div class="w-[50px] h-[50px] rounded-xl flex flex-col items-center justify-center shrink-0 transition-all ${isPast ? 'bg-edge/20 border border-edge/30 text-secondary/40' :
+                            isNext ? 'bg-accent/10 text-accent border border-accent/20 shadow-sm' :
+                                'bg-card text-primary border border-edge shadow-sm'
                         }">
-                                <span class="text-[9px] font-bold uppercase tracking-widest leading-none mb-1 ${isPast ? 'text-gray-400' :
-                            isNext ? 'text-white/80' :
+                                <span class="text-[9px] font-bold uppercase tracking-widest leading-none mb-1 ${isPast ? 'text-secondary/40' :
+                            isNext ? 'text-accent/80' :
                                 'text-secondary'
                         }">${monthStr}</span>
-                                <span class="text-[16px] font-black leading-none">${dayStr}</span>
+                                <span class="text-[17px] font-semibold tracking-tight leading-none">${dayStr}</span>
                             </div>
 
                             <!-- Event Details -->
                             <div class="flex-1 min-w-0">
-                                <div class="text-[13px] ${isPast ? 'font-medium text-gray-400' :
-                            isNext ? 'font-bold text-primary' :
+                                <div class="flex items-center justify-between gap-3">
+                                     <div class="text-[13px] ${isPast ? 'font-normal text-muted' :
+                            isNext ? 'font-semibold text-primary' :
                                 'font-medium text-primary'
                         } truncate">
-                                    ${event.label}
-                                </div>
-                                <div class="mt-1 flex items-center">
+                                        ${event.label}
+                                    </div>
                                     ${isNext ?
-                            `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-accent/10 text-accent text-[11px] font-bold tracking-wide">
-                                            ${days === 0 ? 'Due Today' : `${days} Days Left`}
+                            `<span class="inline-flex items-center px-2 py-0.5 rounded-lg bg-accent-soft text-accent text-[10px] font-bold tracking-wide border border-accent/20 shrink-0 shadow-sm">
+                                            ${days === 0 ? 'Due Today' : `${days} ${Math.abs(days) === 1 ? 'Day' : 'Days'} Left`}
                                         </span>`
                             :
-                            `<span class="text-[11px] font-medium ${isPast ? 'text-gray-300' : 'text-secondary'}">${d.getFullYear()}</span>`
+                            ''
                         }
                                 </div>
                             </div>
@@ -558,13 +551,13 @@
                 }).join('');
 
                 return `
-                    <div class="p-6 flex flex-col h-full hover:bg-gray-50/30 transition-colors">
-                        <div class="flex items-center justify-between mb-6 pb-4 border-b border-edge">
+                    <div class="p-6 flex flex-col h-full hover:bg-sidebar-hover/30 transition-colors">
+                        <div class="flex items-center justify-between mb-8 pb-5 border-b border-edge/30">
                             <div class="flex items-center gap-2">
-                                <h4 class="text-[15px] font-bold text-primary">${uni.shortName}</h4>
-                                ${uni.submitted ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-success/10 text-success border border-success/20 uppercase tracking-wide">Submitted</span>' : ''}
+                                <h4 class="text-[15px] font-bold text-primary leading-tight">${uni.name}</h4>
+                                ${uni.submitted ? '<span class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-success/10 text-success border border-success/20 uppercase tracking-wide shrink-0">Submitted</span>' : ''}
                             </div>
-                            <span class="text-[10px] text-secondary font-bold uppercase tracking-widest">Schedule</span>
+                            <span class="text-[10px] text-secondary font-bold uppercase tracking-widest shrink-0">Fall 2026</span>
                         </div>
                         <div class="flex flex-col">
                             ${timelineHtml}
@@ -587,14 +580,23 @@
                 return;
             }
 
-            list.innerHTML = filtered.map(doc => `
-                <label class="group flex items-center gap-3 px-3 py-3 hover:bg-accent/5 rounded-lg cursor-pointer transition-all select-none border border-transparent hover:border-accent/20">
-                    <div class="relative flex items-center justify-center w-5 h-5 rounded-md border-2 ${doc.completed ? 'bg-success border-success' : 'bg-white border-gray-300 group-hover:border-accent'} transition-all shrink-0 shadow-sm">
-                        <input type="checkbox" class="absolute opacity-0 w-full h-full cursor-pointer" ${doc.completed ? 'checked' : ''} onchange="toggleGlobalDocument('${doc.id}', this.checked)">
-                        ${doc.completed ? '<i data-lucide="check" class="w-3 h-3 text-white"></i>' : ''}
+              list.innerHTML = filtered.map(doc => `
+                <label class="group flex items-center gap-4 px-5 py-4 hover:bg-sidebar-hover cursor-pointer transition-all duration-200 select-none border-b border-edge/20 last:border-0 first:rounded-t-xl last:rounded-b-xl">
+                    <div class="relative flex items-center justify-center w-5 h-5 rounded-lg border-2 ${doc.completed ? 'bg-success border-success' : 'bg-card border-edge group-hover:border-accent'} transition-all duration-300 shrink-0">
+                        <input type="checkbox" class="absolute opacity-0 w-full h-full cursor-pointer z-10" ${doc.completed ? 'checked' : ''} onchange="toggleGlobalDocument('${doc.id}', this.checked)">
+                        <div class="flex items-center justify-center transition-all duration-300 ${doc.completed ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}">
+                            <i data-lucide="check" class="w-3 h-3 text-white stroke-[4]"></i>
+                        </div>
                     </div>
-                    <span class="text-[14px] ${doc.completed ? 'text-gray-400 line-through' : 'text-primary'}">${doc.label}</span>
-                    <span class="ml-auto text-[11px] font-medium ${doc.completed ? 'text-success' : 'text-gray-400'}">${doc.completed ? 'Ready' : 'Pending'}</span>
+                    <div class="flex flex-col min-w-0 flex-1">
+                        <span class="text-[14px] font-medium ${doc.completed ? 'text-success' : 'text-primary'} transition-colors duration-200">${doc.label}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        ${doc.completed ? 
+                            '<span class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-success/10 text-success border border-success/20 uppercase tracking-widest shrink-0">Ready</span>' : 
+                            '<span class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-edge/20 text-secondary border border-edge/30 uppercase tracking-widest shrink-0">Pending</span>'
+                        }
+                    </div>
                 </label>
             `).join('');
         }
@@ -606,13 +608,15 @@
                 const prepared = uni.documents.filter(d => d.completed).length;
                 const total = uni.documents.length;
 
-                const docsHtml = visible.map(doc => `
-                    <label class="group flex items-center gap-3 px-3 py-3 hover:bg-accent/5 rounded-lg cursor-pointer transition-all select-none border border-transparent hover:border-accent/20 ${uni.submitted ? 'pointer-events-none opacity-60' : ''}">
-                        <div class="relative flex items-center justify-center w-5 h-5 rounded-md border-2 ${doc.completed ? 'bg-success border-success' : 'bg-white border-gray-300 group-hover:border-accent'} transition-all shrink-0 shadow-sm">
-                            <input type="checkbox" class="absolute opacity-0 w-full h-full cursor-pointer" ${doc.completed ? 'checked' : ''} onchange="toggleSpecificDocument('${uni.id}', '${doc.id}', this.checked)">
-                            ${doc.completed ? '<i data-lucide="check" class="w-3 h-3 text-white"></i>' : ''}
+                 const docsHtml = visible.map(doc => `
+                    <label class="group flex items-center gap-3 px-3 py-2.5 hover:bg-sidebar-hover transition-all duration-200 select-none first:rounded-t-xl last:rounded-b-xl ${uni.submitted ? 'pointer-events-none opacity-60' : ''}">
+                        <div class="relative flex items-center justify-center w-4 h-4 rounded-lg border-2 ${doc.completed ? 'bg-success border-success' : 'bg-card border-edge group-hover:border-accent'} transition-all duration-300 shrink-0">
+                            <input type="checkbox" class="absolute opacity-0 w-full h-full cursor-pointer z-10" ${doc.completed ? 'checked' : ''} onchange="toggleSpecificDocument('${uni.id}', '${doc.id}', this.checked)">
+                            <div class="flex items-center justify-center transition-all duration-300 ${doc.completed ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}">
+                                <i data-lucide="check" class="w-2.5 h-2.5 text-white stroke-[4]"></i>
+                            </div>
                         </div>
-                        <span class="text-[14px] ${doc.completed ? 'text-gray-400 line-through' : 'text-primary'} truncate">${doc.label}</span>
+                        <span class="text-[13px] font-medium ${doc.completed ? 'text-success' : 'text-primary'} truncate transition-colors duration-200">${doc.label}</span>
                     </label>
                 `).join('');
 
@@ -653,36 +657,39 @@
             container.innerHTML = state.universities.map(uni => {
                 const stats = getUniversityStats(uni);
 
-                let submitAreaHtml = '';
+                let progressHtml = '';
+                let submitButtonHtml = '';
+
                 if (uni.submitted) {
-                    submitAreaHtml = `
-                        <button onclick="toggleSubmitted('${uni.id}')" class="text-[12px] text-secondary hover:text-primary underline flex items-center gap-1 transition-colors"><i data-lucide="rotate-ccw" class="w-3 h-3"></i> Undo</button>
-                        <span class="text-[12px] font-bold tracking-wide text-success flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4"></i> SUBMITTED</span>
-                    `;
-                } else if (stats.progress === 100) {
-                    submitAreaHtml = `
-                        <span class="text-[12px] font-medium text-secondary">100% Ready</span>
-                        <button onclick="toggleSubmitted('${uni.id}')" class="px-3.5 py-1.5 bg-success text-white text-[12px] font-medium rounded-lg shadow-sm hover:bg-success/90 transition-all flex items-center gap-1.5"><i data-lucide="send" class="w-3.5 h-3.5"></i> Submit App</button>
-                    `;
+                    progressHtml = '<span class="text-[11px] font-bold text-success flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> SUBMITTED</span>';
+                    submitButtonHtml = `<button onclick="toggleSubmitted('${uni.id}')" class="text-[12px] text-secondary hover:text-primary underline flex items-center gap-1 transition-colors"><i data-lucide="rotate-ccw" class="w-3 h-3"></i> Undo</button>`;
                 } else {
-                    submitAreaHtml = `
-                        <span class="text-[12px] font-medium text-secondary">${stats.progress}% Prepared</span>
-                        <button disabled class="px-3.5 py-1.5 bg-gray-100 text-gray-400 text-[12px] font-medium rounded-lg flex items-center gap-1.5 cursor-not-allowed"><i data-lucide="send" class="w-3.5 h-3.5"></i> Submit App</button>
-                    `;
+                    const statusText = stats.progress === 100 ? '100% Ready' : `${stats.progress}% Prepared`;
+                    const statusClass = stats.progress === 100 ? 'text-accent' : 'text-secondary';
+                    progressHtml = `<span class="text-[11px] font-bold ${statusClass} uppercase tracking-wider">${statusText}</span>`;
+                    
+                    if (stats.progress === 100) {
+                        submitButtonHtml = `<button onclick="toggleSubmitted('${uni.id}')" class="px-3.5 py-1.5 bg-success text-white text-[12px] font-medium rounded-lg shadow-sm hover:bg-success/90 transition-all flex items-center gap-1.5"><i data-lucide="send" class="w-3.5 h-3.5"></i> Submit App</button>`;
+                    } else {
+                        submitButtonHtml = `<button disabled class="px-3.5 py-1.5 bg-edge/20 text-secondary/50 text-[12px] font-medium rounded-lg flex items-center gap-1.5 cursor-not-allowed border border-edge/30"><i data-lucide="send" class="w-3.5 h-3.5"></i> Submit App</button>`;
+                    }
                 }
 
                 return `
                     <div class="bg-card border border-edge rounded-xl p-5 shadow-soft flex flex-col h-full transition-all ${uni.submitted ? 'ring-1 ring-success/30 bg-success/[0.02]' : ''}">
                         <div class="flex justify-between items-center mb-4">
-                            <h4 class="text-[14px] font-bold text-primary">${uni.shortName} <span class="font-medium text-secondary ml-1">Access</span></h4>
-                            <div class="flex gap-1.5">
-                                ${uni.links?.portal ? `<a href="${uni.links.portal}" target="_blank" class="w-7 h-7 flex items-center justify-center rounded bg-appbg border border-edge text-secondary hover:text-accent hover:border-accent transition-colors" title="Launch Portal"><i data-lucide="external-link" class="w-3.5 h-3.5"></i></a>` : ''}
-                                ${uni.links?.guidelines ? `<a href="${uni.links.guidelines}" target="_blank" class="w-7 h-7 flex items-center justify-center rounded bg-appbg border border-edge text-secondary hover:text-accent hover:border-accent transition-colors" title="View Guidelines"><i data-lucide="file-text" class="w-3.5 h-3.5"></i></a>` : ''}
-                            </div>
+                            <h4 class="text-[14px] font-bold text-primary">${uni.shortName}</h4>
+                            ${progressHtml}
                         </div>
                         <textarea onchange="updateNotes('${uni.id}', this.value)" placeholder="Saved application IDs, portal passwords, or private notes..." class="w-full text-[13px] p-3 rounded-lg border border-edge bg-appbg focus:bg-white focus:ring-1 focus:ring-accent outline-none resize-none flex-1 min-h-[90px] text-primary placeholder:text-gray-400 disabled:opacity-50" ${uni.submitted ? 'disabled' : ''}>${escapeHtml(uni.notes)}</textarea>
-                        <div class="mt-4 pt-4 border-t border-edge flex justify-between items-center">
-                            ${submitAreaHtml}
+                        <div class="mt-4 pt-4 border-t border-edge">
+                            <div class="flex justify-between items-center">
+                                <div class="flex gap-1.5">
+                                    ${uni.links?.portal ? `<a href="${uni.links.portal}" target="_blank" class="w-8 h-8 flex items-center justify-center rounded-lg bg-appbg border border-edge text-secondary hover:text-accent hover:border-accent transition-colors" title="Launch Portal"><i data-lucide="external-link" class="w-4 h-4"></i></a>` : ''}
+                                    ${uni.links?.guidelines ? `<a href="${uni.links.guidelines}" target="_blank" class="w-8 h-8 flex items-center justify-center rounded-lg bg-appbg border border-edge text-secondary hover:text-accent hover:border-accent transition-colors" title="View Guidelines"><i data-lucide="file-text" class="w-4 h-4"></i></a>` : ''}
+                                </div>
+                                ${submitButtonHtml}
+                            </div>
                         </div>
                     </div>
                 `;
@@ -690,41 +697,8 @@
         }
 
         function attachUIListeners() {
-            // Profile Toggle
-            const pToggle = document.getElementById('profileToggleButton');
-            const pClose = document.getElementById('profileCloseButton');
-            const pOverlay = document.getElementById('profileOverlay');
-            const pPanel = document.getElementById('profilePanel');
-
-            const toggleProfile = (force) => {
-                const isOpen = force !== undefined ? force : pPanel.classList.contains('translate-x-full');
-                pPanel.classList.toggle('translate-x-full', !isOpen);
-                pOverlay.classList.toggle('opacity-0', !isOpen);
-                pOverlay.classList.toggle('pointer-events-none', !isOpen);
-            };
-
-            pToggle.addEventListener('click', () => toggleProfile(true));
-            pClose.addEventListener('click', () => toggleProfile(false));
-            pOverlay.addEventListener('click', () => toggleProfile(false));
-
             // Search Filter
             const sInput = document.getElementById('searchInput');
-            const sToggle = document.getElementById('searchToggleButton');
-            const sPopover = document.getElementById('searchPopover');
-
-            sToggle.addEventListener('click', () => {
-                const hidden = sPopover.classList.contains('opacity-0');
-                sPopover.classList.toggle('opacity-0', !hidden);
-                sPopover.classList.toggle('pointer-events-none', !hidden);
-                sPopover.classList.toggle('translate-y-1', !hidden);
-                if (hidden) sInput.focus();
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!sPopover.contains(e.target) && !sToggle.contains(e.target)) {
-                    sPopover.classList.add('opacity-0', 'pointer-events-none', 'translate-y-1');
-                }
-            });
 
             let st;
             sInput.addEventListener('input', (e) => {
@@ -738,12 +712,76 @@
             });
         }
 
+        function renderSidebarCountdowns() {
+            const container = document.getElementById('sidebarCountdowns');
+            if (!container) return;
+
+            container.innerHTML = state.universities.map(uni => {
+                const openDate = uni.timeline.find(e => e.id === 'open')?.date;
+                const deadlineDate = uni.timeline.find(e => e.id === 'app_deadline')?.date;
+                
+                const daysToOpen = getDaysUntil(openDate);
+                const daysToDeadline = getDaysUntil(deadlineDate);
+
+                let label = '';
+                let subLabel = '';
+                let daysText = '';
+                let accentClass = '';
+                let icon = '';
+
+                const formatSmartDays = (d) => {
+                    if (d === 0) return 'Today';
+                    if (d === 1) return 'Tomorrow';
+                    const unit = Math.abs(d) === 1 ? 'day' : 'days';
+                    return d > 0 ? `in ${d} ${unit}` : `${Math.abs(d)} ${unit} ago`;
+                };
+
+                if (daysToOpen > 0) {
+                    label = 'Opens in';
+                    subLabel = 'Applications Opening';
+                    daysText = formatSmartDays(daysToOpen);
+                    accentClass = 'text-secondary';
+                    icon = 'calendar';
+                } else if (daysToDeadline >= 0) {
+                    label = 'Due in';
+                    subLabel = 'Final Deadline';
+                    daysText = daysToDeadline === 0 ? 'Due Today' : formatSmartDays(daysToDeadline);
+                    accentClass = 'text-secondary';
+                    icon = 'clock';
+                } else {
+                    label = 'Status';
+                    subLabel = 'Admissions Closed';
+                    daysText = 'Past';
+                    accentClass = 'text-secondary opacity-50';
+                    icon = 'check-circle-2';
+                }
+
+                let bgClass = 'bg-appbg border-edge/60';
+
+                return `
+                    <div class="px-3 py-2.5 rounded-xl border ${bgClass} shadow-sm transition-all duration-200 group">
+                        <div class="flex justify-between items-center mb-1.5">
+                            <span class="text-[12px] font-bold text-primary tracking-tight">${uni.shortName}</span>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white text-secondary border border-edge/50 shadow-sm">${daysText}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-5 h-5 rounded-md flex items-center justify-center bg-white shadow-sm border border-edge/50">
+                                <i data-lucide="${icon}" class="w-3 h-3 ${accentClass}"></i>
+                            </div>
+                            <span class="text-[10px] font-semibold text-secondary truncate">${subLabel}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
         function render() {
             renderAppTimelines();
             renderGlobalDocs(document.getElementById('searchInput').value);
             renderSpecificDocs(document.getElementById('searchInput').value);
             renderQuickAccess();
             renderProfile();
+            renderSidebarCountdowns();
             lucide.createIcons();
         }
 

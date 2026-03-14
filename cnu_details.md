@@ -10,7 +10,7 @@ According to the **Admission Schedule table on page 3**, the Fall intake has **t
 
 | Step                                             | Date                        |
 | ------------------------------------------------ | --------------------------- |
-| Online Application (Uway Apply)                  | **2026-04-01 → 2026-04-07** |
+| Online Application (Uway Apply)                  | **2026-04-01 → 2026-04-17** |
 | Document Submission Deadline                     | **2026-04-01 → 2026-04-24** |
 | Evaluation of Entrance                           | **2026-05-18 → 2026-05-21** |
 | Admission Result Announcement                    | **2026-06-12 (16:00 KST)**  |
@@ -389,18 +389,10 @@ Travel to Korea
 
 ---
 
-# 10. Recommended Engineering Majors (English-friendly)
-
-From the major list in the document (pages 4–7). 
-
-Good options for international students:
-
-* Mechanical Engineering
-* Electrical Engineering
-* Civil Engineering
-* Chemical Engineering
-* Materials Science Engineering
-* Energy Resources Engineering
+### ⚠️ Department Choice
+Your preferred majors (Mechanical, Electrical, Electronic) are **restricted** for the Fall 2026 intake at the Gwangju Campus. Please ensure you select one of the available alternatives during your application:
+* **Department of Big Data Convergence**
+* **Department of Future Mobility**
 
 ---
 

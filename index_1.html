@@ -147,7 +147,7 @@
                 </div>
             </div>
 
-            <div class="flex items-center border-l border-edge pl-4 shrink-0">
+            <div class="flex items-center border-l border-edge pl-4 shrink-0 gap-3">
             </div>
         </header>
 
@@ -291,6 +291,23 @@
         </div>
     </div>
 
+    <!-- Notes & Restrictions Modal -->
+    <div id="notesModal" onclick="hideNotesModal()" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-primary/20 backdrop-blur-sm transition-all duration-300 opacity-0">
+        <div onclick="event.stopPropagation()" class="bg-card border border-edge rounded-2xl p-8 shadow-2xl max-w-lg w-full mx-4 transform scale-95 transition-transform duration-300">
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <h3 id="modalNotesTitle" class="text-[16px] font-bold text-primary mb-1">University Notes</h3>
+                    <p class="text-[12px] text-secondary">Policy & Department Restrictions</p>
+                </div>
+                <button onclick="hideNotesModal()" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-appbg transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
+            </div>
+            <div id="modalNotesContent" class="space-y-4 max-h-[400px] overflow-y-auto pr-2">
+                <!-- Populated dynamically -->
+            </div>
+            <p class="mt-6 text-[11px] text-secondary text-center italic">Click anywhere outside to dismiss</p>
+        </div>
+    </div>
+
     <script>
         const STORAGE_KEY = 'uni-dashboard-tracker-v2';
 
@@ -336,17 +353,21 @@
                 id: 'jbnu',
                 name: 'Jeonbuk National University',
                 shortName: 'JBNU',
-                links: { portal: 'https://apply.jbnu.ac.kr', guidelines: 'https://jbnu.ac.kr/guidelines.pdf' },
+                links: { portal: 'https://ipsi2.uwayapply.com/2026/foreign/jbnu/?CHA=3', guidelines: 'https://top.jbnu.ac.kr/sites/ioffice/file/2-1%20English.pdf' },
                 timeline: [
-                    { id: 'open', label: 'Application Opens', date: '2026-03-01' },
-                    { id: 'app_deadline', label: 'Application Deadline', date: '2026-03-22' },
-                    { id: 'doc_deadline', label: 'Document Submission', date: '2026-03-28' },
-                    { id: 'results', label: 'Result Announcement', date: '2026-05-10' }
+                    { id: 'open', label: 'Application Opens', date: '2026-05-15' },
+                    { id: 'app_deadline', label: 'Application Deadline', date: '2026-06-05' },
+                    { id: 'doc_deadline', label: 'Document Submission', date: '2026-06-12' },
+                    { id: 'results', label: 'Result Announcement', date: '2026-07-24' },
+                    { id: 'tuition', label: 'Tuition Payment', date: '2026-08-05' }
                 ],
                 documents: [
-                    { id: 'financial-statement', label: 'Financial Statement Form (JBNU)', category: 'financial' },
-                    { id: 'statement-of-purpose', label: 'JBNU Statement of Purpose', category: 'academic' }
-                ]
+                    { id: 'jbnu-form1', label: 'Form 1 — Application Form', category: 'administrative', info: 'Print from UwayApply after online entry.' },
+                    { id: 'jbnu-form2', label: 'Form 2 — Affidavit of Financial Support', category: 'financial', info: 'To be signed by sponsor.' },
+                    { id: 'jbnu-info-consent', label: 'Personal Information Consent', category: 'administrative' }
+                ],
+                fee: '80,000 KRW',
+                notes: ''
             },
             {
                 id: 'cnu',
@@ -363,6 +384,7 @@
                 ],
                 documents: [
                     { id: 'uway-application', label: 'Online Application (Uway Printout)', category: 'administrative', info: 'Apply via UwayApply, print, and sign.' },
+                    { id: 'personal-affairs-record', label: 'Personal Affairs Record', category: 'administrative', info: 'Printed along with the Uway application.' },
                     { id: 'cnu-form1', label: 'Form 1 — Financial Guarantee Statement', category: 'financial', info: 'Declare min. 16M KRW funding.' },
                     { id: 'cnu-form2', label: 'Form 2 — Educational Background Info', category: 'academic', info: 'List all schools in English.' },
                     { id: 'cnu-form3', label: 'Form 3 — Statement of Unusual Academics', category: 'academic', info: 'Check "No unusual circumstances" if none.' },
@@ -370,7 +392,8 @@
                     { id: 'cnu-form5', label: 'Form 5 — Nationality Information', category: 'identity', info: 'Verify non-Korean citizenship.' },
                     { id: 'cnu-form6', label: 'Form 6 — Personal Information Consent', category: 'administrative', info: 'Must agree to third-party verification.' }
                 ],
-                notes: ''
+                fee: '70,000 KRW',
+                notes: '#### ⚠️ Department Choice\nYour preferred majors (Mechanical, Electrical, Electronic) are **restricted** for the Fall 2026 intake at the Gwangju Campus.\n\n**Recommended Alternatives:**\n• Department of Big Data Convergence\n• Department of Future Mobility'
             },
             {
                 id: 'knu',
@@ -378,16 +401,20 @@
                 shortName: 'KNU',
                 links: { portal: 'https://www.kangwon.ac.kr/english', guidelines: 'https://www.kangwon.ac.kr/english/selectBbsNttList.do?bbsNo=424&key=1392' },
                 timeline: [
-                    { id: 'open', label: 'Application Opens (Round 1)', date: '2026-04-06' },
-                    { id: 'app_deadline', label: 'Application Deadline', date: '2026-04-17' },
-                    { id: 'doc_deadline', label: 'Document Submission', date: '2026-04-24' },
-                    { id: 'results', label: 'Result Announcement', date: '2026-06-30' }
+                    { id: 'open', label: 'Online Application', date: '2026-05-11' },
+                    { id: 'app_deadline', label: 'Online App Deadline', date: '2026-06-12' },
+                    { id: 'doc_deadline', label: 'Physical Doc Submission', date: '2026-06-12' },
+                    { id: 'screening', label: 'Departmental Screening', date: '2026-06-29' },
+                    { id: 'results', label: 'Admission Results', date: '2026-07-16' },
+                    { id: 'tuition', label: 'Tuition & Registration', date: '2026-07-20' }
                 ],
                 documents: [
-                    { id: 'statement-fin-support', label: 'Statement of Financial Support', category: 'financial' },
-                    { id: 'study-plan-intro', label: 'Study Plan & Personal Introduction', category: 'academic' },
-                    { id: 'family-relation-cert', label: 'Family Relation Certificate (Translated)', category: 'identity' }
-                ]
+                    { id: 'knu-form1', label: 'Form 1 — Application Form', category: 'administrative', info: 'Print from KNU portal after online entry.' },
+                    { id: 'knu-form3', label: 'Form 3 — Financial Support Statement', category: 'financial', info: 'Sponsor must pledge financial guarantee.' },
+                    { id: 'knu-survey', label: 'KNU Applicant Survey', category: 'administrative', info: 'Required questionnaire for all international applicants.' }
+                ],
+                fee: '50,000 KRW',
+                notes: ''
             }
         ];
         
@@ -425,7 +452,7 @@
                         ...bu, 
                         documents: mergedDocs, 
                         submitted: foundUni.submitted || false, 
-                        notes: foundUni.notes && foundUni.notes.trim() !== "" ? foundUni.notes : (bu.notes || '') 
+                        notes: bu.notes || '' 
                     };
                 });
 
@@ -518,28 +545,6 @@
             render();
         };
 
-        let editingNotesId = null;
-
-        window.editNotes = function (uniId) {
-            editingNotesId = uniId;
-            render();
-            // Focus the textarea after render
-            setTimeout(() => {
-                const ta = document.querySelector(`textarea[data-uni-id="${uniId}"]`);
-                if (ta) {
-                    ta.focus();
-                    ta.setSelectionRange(ta.value.length, ta.value.length);
-                }
-            }, 50);
-        };
-
-        window.saveNotes = function (uniId, val) {
-            const uni = state.universities.find(u => u.id === uniId);
-            if (uni) uni.notes = val;
-            editingNotesId = null;
-            saveState();
-            render();
-        };
 
         window.showAddressModal = function (address) {
             const modal = document.getElementById('addressModal');
@@ -574,16 +579,65 @@
             }, 2000);
         };
 
-        window.deleteNoteTile = function (uniId, index) {
-            const uni = state.universities.find(u => u.id === uniId);
-            if (uni) {
-                const paragraphs = uni.notes.split(/\n\n+/).filter(p => p.trim() !== "");
-                paragraphs.splice(index, 1);
-                uni.notes = paragraphs.join('\n\n');
-                saveState();
-                render();
-            }
+        const parseNotes = (text) => {
+            if (!text) return 'No specific notes.';
+            return text
+                .replace(/#### (.*)/g, '<h5 class="text-[14px] font-bold text-primary mt-4 mb-2 first:mt-0">$1</h5>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-primary">$1</strong>')
+                .replace(/• (.*)/g, '<div class="flex gap-2 ml-1 mb-1.5"><span class="text-accent font-bold">•</span><span class="text-secondary">$1</span></div>')
+                .replace(/\n\n/g, '<div class="h-3"></div>')
+                .replace(/\n/g, '<br>');
         };
+
+        window.showNotesModal = function (uniId) {
+            const modal = document.getElementById('notesModal');
+            const box = modal.querySelector('div');
+            const content = document.getElementById('modalNotesContent');
+            const title = document.getElementById('modalNotesTitle');
+
+            if (uniId === 'all') {
+                title.textContent = 'All University Guidelines';
+                content.innerHTML = `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pr-2">
+                        ${state.universities.map(u => `
+                            <div class="p-5 bg-appbg border border-edge rounded-2xl flex flex-col">
+                                <h4 class="text-[13px] font-extrabold text-primary mb-3 flex items-center gap-2 uppercase tracking-tight">
+                                   <span class="w-1.5 h-4 rounded-full bg-accent"></span> ${u.name}
+                                </h4>
+                                <div class="text-[12px] leading-relaxed flex-1">${parseNotes(u.notes)}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                // Add class to expand box for side-by-side
+                box.classList.replace('max-w-lg', 'max-w-4xl');
+            } else {
+                const uni = state.universities.find(u => u.id === uniId);
+                title.textContent = `${uni.shortName} Guidelines`;
+                content.innerHTML = `
+                    <div class="p-6 bg-appbg border border-edge rounded-2xl">
+                        <div class="text-[13px] leading-relaxed">${parseNotes(uni.notes)}</div>
+                    </div>
+                `;
+                box.classList.replace('max-w-4xl', 'max-w-lg');
+            }
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.replace('opacity-0', 'opacity-100');
+                box.classList.replace('scale-95', 'scale-100');
+            }, 10);
+            lucide.createIcons();
+        };
+
+        window.hideNotesModal = function () {
+            const modal = document.getElementById('notesModal');
+            const box = modal.querySelector('div');
+            modal.classList.replace('opacity-100', 'opacity-0');
+            box.classList.replace('scale-100', 'scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        };
+
 
         // Renders
         function renderAppTimelines() {
@@ -782,55 +836,44 @@
                     }
                 }
 
-                let notesContentHtml = '';
-                if (editingNotesId === uni.id) {
-                    notesContentHtml = `
-                        <div class="flex flex-col flex-1 gap-2">
-                            <textarea id="notesEditor-${uni.id}" data-uni-id="${uni.id}" placeholder="Saved application IDs, portal passwords, or private notes..." class="w-full text-[13px] p-3 rounded-lg border border-accent bg-white outline-none resize-none flex-1 min-h-[120px] text-primary placeholder:text-gray-400">${uni.notes}</textarea>
-                            <div class="flex justify-end">
-                                <button onclick="saveNotes('${uni.id}', document.getElementById('notesEditor-${uni.id}').value)" class="px-3 py-1 bg-primary text-white text-[11px] font-bold rounded-lg hover:bg-primary/90 shadow-sm transition-all uppercase tracking-wide">Save Note</button>
-                            </div>
-                        </div>
-                    `;
-                } else if (!uni.notes || uni.notes.trim() === "") {
-                    notesContentHtml = `
-                        <button onclick="editNotes('${uni.id}')" class="w-full py-6 border-2 border-dashed border-edge/40 rounded-xl text-[12px] font-medium text-secondary hover:text-primary hover:border-accent/40 hover:bg-accent/[0.02] transition-all flex flex-col items-center gap-2 group">
-                            <i data-lucide="plus-circle" class="w-5 h-5 opacity-40 group-hover:opacity-100 transition-opacity"></i>
-                            Add Application Notes
-                        </button>
-                    `;
-                } else {
-                    notesContentHtml = `
-                        <div class="flex-1 group relative">
-                            <div onclick="editNotes('${uni.id}')" class="bg-appbg border border-edge/60 rounded-xl p-4 pr-12 text-[12px] leading-relaxed text-primary transition-all hover:border-accent/30 hover:shadow-sm cursor-pointer min-h-[100px] flex flex-col">
-                                <div class="flex-1">
-                                    ${escapeHtml(uni.notes).replace(/\n/g, '<br>')}
-                                </div>
-                            </div>
-                            <div class="absolute right-3 top-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none group-hover:pointer-events-auto">
-                                <button onclick="event.stopPropagation(); saveNotes('${uni.id}', '')" class="w-7 h-7 flex items-center justify-center rounded-lg bg-white border border-edge text-secondary hover:text-danger hover:border-danger shadow-sm transition-all" title="Remove Note">
-                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                return `
+                    <div class="bg-card border border-edge rounded-xl p-5 shadow-soft flex flex-col h-full transition-all ${uni.submitted ? 'ring-1 ring-success/30 bg-success/[0.02]' : ''}">
+                        <div class="flex justify-between items-center mb-6">
+                            <h4 class="text-[14px] font-bold text-primary">${uni.shortName}</h4>
+                            <div class="flex items-center gap-2">
+                                ${progressHtml}
+                                <button onclick="showNotesModal('${uni.id}')" class="text-secondary hover:text-accent transition-colors p-1" title="View Guidelines">
+                                    <i data-lucide="info" class="w-4 h-4"></i>
                                 </button>
                             </div>
                         </div>
-                    `;
-                }
-
-                return `
-                    <div class="bg-card border border-edge rounded-xl p-5 shadow-soft flex flex-col h-full transition-all ${uni.submitted ? 'ring-1 ring-success/30 bg-success/[0.02]' : ''}">
-                        <div class="flex justify-between items-center mb-4">
-                            <h4 class="text-[14px] font-bold text-primary">${uni.shortName}</h4>
-                            ${progressHtml}
-                        </div>
                         
-                        ${notesContentHtml}
+                        <div class="flex-1 flex flex-col justify-center py-4 gap-3">
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between text-[12px] text-secondary">
+                                    <span class="font-medium">Documents Ready</span>
+                                    <span class="font-bold text-primary">${stats.prepared}/${stats.total}</span>
+                                </div>
+                                <div class="w-full h-1.5 bg-edge/40 rounded-full overflow-hidden">
+                                    <div class="h-full bg-accent transition-all duration-500" style="width: ${stats.progress}%"></div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between p-2.5 bg-appbg border border-edge/60 rounded-xl">
+                                <span class="text-[11px] font-bold text-secondary uppercase tracking-tight flex items-center gap-1.5">
+                                    <i data-lucide="wallet" class="w-3 h-3"></i> App Fee
+                                </span>
+                                <span class="text-[12px] font-bold text-primary">${uni.fee || 'TBD'}</span>
+                            </div>
+                        </div>
 
-                        <div class="mt-auto pt-4">
+                        <div class="mt-auto pt-4 border-t border-edge/30">
                             <div class="flex justify-between items-center">
                                 <div class="flex gap-1.5 align-middle">
                                     ${uni.links?.portal ? `<a href="${uni.links.portal}" target="_blank" class="w-8 h-8 flex items-center justify-center rounded-lg bg-appbg border border-edge text-secondary hover:text-accent hover:border-accent transition-colors" title="Launch Portal"><i data-lucide="external-link" class="w-4 h-4"></i></a>` : ''}
-                                    ${uni.links?.guidelines ? `<a href="${uni.links.guidelines}" target="_blank" class="w-8 h-8 flex items-center justify-center rounded-lg bg-appbg border border-edge text-secondary hover:text-accent hover:border-accent transition-colors" title="View Guidelines"><i data-lucide="file-text" class="w-4 h-4"></i></a>` : ''}
+                                    ${uni.links?.guidelines ? `<a href="${uni.links.guidelines}" target="_blank" class="w-8 h-8 flex items-center justify-center rounded-lg bg-appbg border border-edge text-secondary hover:text-accent hover:border-accent transition-colors" title="View PDF Guidelines"><i data-lucide="file-text" class="w-4 h-4"></i></a>` : ''}
+                                     ${uni.id === 'jbnu' ? `<button onclick="showAddressModal('Office of International Affairs, International Center 3rd Floor, Jeonbuk National University, 567 Baekje-daero, Deokjin-gu, Jeonju-si, Jeollabuk-do, 54896 Republic of Korea')" class="w-8 h-8 flex items-center justify-center rounded-lg bg-appbg border border-edge text-secondary hover:text-accent hover:border-accent transition-colors" title="View Mailing Address"><i data-lucide="map-pin" class="w-4 h-4"></i></button>` : ''}
                                     ${uni.id === 'cnu' ? `<button onclick="showAddressModal('Office of International Affairs, Chonnam National University, Room 214, Yongbong-ro 77, Buk-gu, Gwangju, South Korea (61186)')" class="w-8 h-8 flex items-center justify-center rounded-lg bg-appbg border border-edge text-secondary hover:text-accent hover:border-accent transition-colors" title="View Mailing Address"><i data-lucide="map-pin" class="w-4 h-4"></i></button>` : ''}
+                                    ${uni.id === 'knu' ? `<button onclick="showAddressModal('Department of International Affairs, Room 406, Office of International Affairs, Kangwon National University, 1, Gangwondaehak-gil, Chuncheon-si, Gangwon State, Republic of Korea, 24341')" class="w-8 h-8 flex items-center justify-center rounded-lg bg-appbg border border-edge text-secondary hover:text-accent hover:border-accent transition-colors" title="View Mailing Address"><i data-lucide="map-pin" class="w-4 h-4"></i></button>` : ''}
                                 </div>
                                 ${submitButtonHtml}
                             </div>

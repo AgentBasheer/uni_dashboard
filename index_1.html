@@ -79,6 +79,23 @@
         .progress-bar {
             transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 20px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 
@@ -293,7 +310,7 @@
 
     <!-- Notes & Restrictions Modal -->
     <div id="notesModal" onclick="hideNotesModal()" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-primary/20 backdrop-blur-sm transition-all duration-300 opacity-0">
-        <div onclick="event.stopPropagation()" class="bg-card border border-edge rounded-2xl p-8 shadow-2xl max-w-lg w-full mx-4 transform scale-95 transition-transform duration-300">
+        <div onclick="event.stopPropagation()" class="bg-card border border-edge rounded-3xl p-8 shadow-2xl max-w-2xl w-full mx-4 transform scale-95 transition-transform duration-300 flex flex-col">
             <div class="flex justify-between items-start mb-6">
                 <div>
                     <h3 id="modalNotesTitle" class="text-[16px] font-bold text-primary mb-1">University Notes</h3>
@@ -301,7 +318,7 @@
                 </div>
                 <button onclick="hideNotesModal()" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-appbg transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
             </div>
-            <div id="modalNotesContent" class="space-y-4 max-h-[400px] overflow-y-auto pr-2">
+            <div id="modalNotesContent" class="space-y-4 max-h-[75vh] overflow-y-auto pr-2 custom-scrollbar">
                 <!-- Populated dynamically -->
             </div>
             <p class="mt-6 text-[11px] text-secondary text-center italic">Click anywhere outside to dismiss</p>
@@ -367,7 +384,7 @@
                     { id: 'jbnu-info-consent', label: 'Personal Information Consent', category: 'administrative' }
                 ],
                 fee: '80,000 KRW',
-                notes: ''
+                notes: []
             },
             {
                 id: 'cnu',
@@ -393,7 +410,12 @@
                     { id: 'cnu-form6', label: 'Form 6 — Personal Information Consent', category: 'administrative', info: 'Must agree to third-party verification.' }
                 ],
                 fee: '70,000 KRW',
-                notes: '#### ⚠️ Department Choice\nYour preferred majors (Mechanical, Electrical, Electronic) are **restricted** for the Fall 2026 intake at the Gwangju Campus.\n\n**Recommended Alternatives:**\n• Department of Big Data Convergence\n• Department of Future Mobility'
+                notes: [
+                    {
+                        title: '⚠️ Department Choice',
+                        content: 'Your preferred majors (Mechanical, Electrical, Electronic) are **restricted** for the Fall 2026 intake at the Gwangju Campus.\n\n**Recommended Alternatives:**\n• Department of Big Data Convergence\n• Department of Future Mobility'
+                    }
+                ]
             },
             {
                 id: 'knu',
@@ -415,7 +437,20 @@
                     { id: 'knu-survey', label: 'KNU Applicant Survey', category: 'administrative', info: 'Required questionnaire for all international applicants.' }
                 ],
                 fee: '50,000 KRW',
-                notes: '#### ⚠️ Critical Department Warning\n**CS & Electrical Engineering** are NOT available for application with only IELTS at KNU.\n\n#### 🎓 Scholarship Status: ELIGIBLE\n**Full Scholarship (100% Waiver)** secured for 1st semester with your IELTS 7.5.\n\n#### 💡 Top Recommendations\n**1. Advanced AI Engineering (Samcheok)**\n• English-track (Category 1). Closest to CS/Electronics.\n• Screening: Document review only.\n\n**2. Mechanical Convergence (Chuncheon)**\n• Specialized for Int’l students. Mandatory interview (Advantage with IELTS 7.5).\n\n**3. Battery Convergence (Chuncheon)**\n• High-growth/High-salary. Mandatory interview.'
+                notes: [
+                    {
+                        title: '⚠️ Critical Department Warning',
+                        content: '**CS & Electrical Engineering** are NOT available for application with only IELTS at KNU.'
+                    },
+                    {
+                        title: '🎓 Scholarship Status: ELIGIBLE',
+                        content: '**Full Scholarship (100% Waiver)** secured for 1st semester with your IELTS 7.5.'
+                    },
+                    {
+                        title: '💡 Top Recommendations',
+                        content: '**1. Advanced AI Engineering (Samcheok)**\n• English-track (Category 1). Closest to CS/Electronics.\n• Screening: Document review only.\n\n**2. Mechanical Convergence (Chuncheon)**\n• Specialized for Int’l students. Mandatory interview (Advantage with IELTS 7.5).\n\n**3. Battery Convergence (Chuncheon)**\n• High-growth/High-salary. Mandatory interview.'
+                    }
+                ]
             }
         ];
         
@@ -427,7 +462,7 @@
                 universities: universityBlueprint.map(u => ({
                     ...u,
                     submitted: false,
-                    notes: '',
+                    notes: u.notes || [],
                     documents: u.documents.map(d => ({ ...d, completed: false }))
                 }))
             };
@@ -453,7 +488,7 @@
                         ...bu, 
                         documents: mergedDocs, 
                         submitted: foundUni.submitted || false, 
-                        notes: bu.notes || '' 
+                        notes: bu.notes || [] 
                     };
                 });
 
@@ -599,28 +634,44 @@
             if (uniId === 'all') {
                 title.textContent = 'All University Guidelines';
                 content.innerHTML = `
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pr-2">
+                    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 pr-2">
                         ${state.universities.map(u => `
-                            <div class="p-5 bg-appbg border border-edge rounded-2xl flex flex-col">
-                                <h4 class="text-[13px] font-extrabold text-primary mb-3 flex items-center gap-2 uppercase tracking-tight">
-                                   <span class="w-1.5 h-4 rounded-full bg-accent"></span> ${u.name}
+                            <div class="p-8 bg-appbg/40 border border-edge/60 rounded-[2rem] flex flex-col shadow-sm hover:shadow-md transition-all">
+                                <h4 class="text-[15px] font-extrabold text-primary mb-6 flex items-center gap-2.5 uppercase tracking-tight">
+                                   <span class="w-2 h-5 rounded-full bg-accent shadow-[0_0_10px_rgba(59,130,246,0.5)]"></span> ${u.name}
                                 </h4>
-                                <div class="text-[12px] leading-relaxed flex-1">${parseNotes(u.notes)}</div>
+                                <div class="space-y-5 flex-1">
+                                    ${u.notes.map(note => `
+                                        <div class="p-5 bg-card border border-edge/40 rounded-3xl shadow-sm">
+                                            <h5 class="text-[14px] font-bold text-primary mb-2.5 flex items-center gap-2">
+                                                <i data-lucide="sticky-note" class="w-3.5 h-3.5 text-accent/60"></i> ${note.title}
+                                            </h5>
+                                            <div class="text-[12.5px] leading-relaxed text-secondary/90 font-medium">${parseNotes(note.content)}</div>
+                                        </div>
+                                    `).join('') || '<div class="p-8 bg-card/50 border border-dashed border-edge/50 rounded-3xl text-[13px] text-secondary/60 italic text-center">No specialized guidelines found.</div>'}
+                                </div>
                             </div>
                         `).join('')}
                     </div>
                 `;
                 // Add class to expand box for side-by-side
-                box.classList.replace('max-w-lg', 'max-w-4xl');
+                box.classList.replace('max-w-2xl', 'max-w-5xl');
             } else {
                 const uni = state.universities.find(u => u.id === uniId);
                 title.textContent = `${uni.shortName} Guidelines`;
                 content.innerHTML = `
-                    <div class="p-6 bg-appbg border border-edge rounded-2xl">
-                        <div class="text-[13px] leading-relaxed">${parseNotes(uni.notes)}</div>
+                    <div class="grid grid-cols-1 gap-5">
+                        ${uni.notes.map(note => `
+                            <div class="p-6 bg-appbg/50 border border-edge/60 rounded-3xl shadow-sm hover:shadow-md transition-all">
+                                <h5 class="text-[15px] font-bold text-primary mb-4 flex items-center gap-2.5">
+                                    <span class="w-2 h-5 rounded-full bg-accent shadow-[0_0_10px_rgba(59,130,246,0.5)]"></span> ${note.title}
+                                </h5>
+                                <div class="text-[13.5px] leading-relaxed text-secondary/90 font-medium">${parseNotes(note.content)}</div>
+                            </div>
+                        `).join('') || '<div class="p-8 bg-appbg/30 border border-dashed border-edge rounded-3xl text-[14px] text-secondary italic text-center">No specialized guidelines found.</div>'}
                     </div>
                 `;
-                box.classList.replace('max-w-4xl', 'max-w-lg');
+                box.classList.replace('max-w-5xl', 'max-w-2xl');
             }
 
             modal.classList.remove('hidden');

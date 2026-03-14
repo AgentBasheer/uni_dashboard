@@ -75,16 +75,8 @@
         </div>
 
         <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-            <a href="#overview"
-                class="flex items-center gap-3 px-3 py-2 rounded-lg bg-white shadow-soft border border-edge text-[13px] font-medium text-primary transition-all">
-                <i data-lucide="layout-dashboard" class="w-4 h-4 text-primary"></i> Dashboard
-            </a>
-
             <div class="pt-4 pb-1 px-3 text-[11px] font-semibold text-secondary uppercase tracking-wider">Planning</div>
-            <a href="#deadlines-section"
-                class="flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-medium text-secondary hover:bg-gray-100 hover:text-primary transition-all">
-                <i data-lucide="bell" class="w-4 h-4"></i> Urgent Deadlines
-            </a>
+
             <a href="#timelines-section"
                 class="flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-medium text-secondary hover:bg-gray-100 hover:text-primary transition-all">
                 <i data-lucide="calendar-days" class="w-4 h-4"></i> Master Timelines
@@ -145,70 +137,7 @@
 
         <div class="p-8 max-w-[1160px] mx-auto flex flex-col gap-10 pb-20 w-full">
 
-            <!-- Overview Section -->
-            <div id="overview" class="scroll-mt-24">
-                <h2 class="text-2xl font-semibold text-primary tracking-tight">Application Launchpad</h2>
-                <p class="text-[14px] text-secondary mt-1">Manage docs, track deadlines, and submit your applications
-                    efficiently.</p>
-            </div>
-
-            <!-- Metrics -->
-            <section class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <div class="bg-card border border-edge rounded-xl p-5 shadow-soft hover:shadow-hover transition-shadow">
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="text-[13px] font-medium text-secondary">Apps Tracked</span>
-                        <i data-lucide="building-2" class="w-4 h-4 text-secondary"></i>
-                    </div>
-                    <span id="universitiesTrackedMetric"
-                        class="text-[28px] leading-none font-semibold text-primary">0</span>
-                </div>
-                <div class="bg-card border border-edge rounded-xl p-5 shadow-soft hover:shadow-hover transition-shadow">
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="text-[13px] font-medium text-secondary">Overall Documents</span>
-                        <i data-lucide="file-check-2" class="w-4 h-4 text-secondary"></i>
-                    </div>
-                    <span id="preparedDocumentsMetric" class="text-[28px] leading-none font-semibold text-primary">0 /
-                        0</span>
-                </div>
-                <div class="bg-card border border-edge rounded-xl p-5 shadow-soft hover:shadow-hover transition-shadow">
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="text-[13px] font-medium text-secondary">Submitted</span>
-                        <i data-lucide="send" class="w-4 h-4 text-success"></i>
-                    </div>
-                    <span id="submittedApplicationsMetric" class="text-[28px] leading-none font-semibold text-primary">0
-                        / 0</span>
-                </div>
-            </section>
-
-            <!-- Global Timeline / Upcoming Deadlines -->
-            <section id="deadlines-section" class="scroll-mt-24">
-                <h3 class="text-[16px] font-semibold text-primary mb-4">Global Timeline & Upcoming Deadlines</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-5" id="globalDeadlinesContainer"></div>
-            </section>
-
-            <!-- Overall Application Progress -->
-            <section id="progress-section" class="scroll-mt-24">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-[16px] font-semibold text-primary">Overall Application Progress</h3>
-                    <span class="text-[12px] text-secondary">Combines Global & Specific Documents.</span>
-                </div>
-                <div class="bg-card border border-edge rounded-xl shadow-soft overflow-hidden">
-                    <div class="grid grid-cols-12 gap-4 px-6 py-3 border-b border-edge bg-appbg/50">
-                        <div class="col-span-4 text-[12px] font-medium text-secondary uppercase tracking-wider">
-                            University</div>
-                        <div class="col-span-4 text-[12px] font-medium text-secondary uppercase tracking-wider">
-                            Preparation Progress</div>
-                        <div class="col-span-2 text-[12px] font-medium text-secondary uppercase tracking-wider">Status
-                        </div>
-                        <div
-                            class="col-span-2 text-[12px] font-medium text-secondary uppercase tracking-wider text-right">
-                            App Deadline</div>
-                    </div>
-                    <div id="progressTableBody" class="divide-y divide-edge"></div>
-                </div>
-            </section>
-
-            <!-- Card 1: Combined Application Timelines -->
+            <!-- Application Timelines -->
             <section id="timelines-section" class="scroll-mt-24">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-[16px] font-semibold text-primary">Application Timelines</h3>
@@ -518,11 +447,6 @@
             return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
         }
 
-        function formatDateLong(dateValue) {
-            const date = new Date(dateValue + 'T00:00:00');
-            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-        }
-
         function calculateAge(dateValue) {
             const birth = new Date(dateValue + 'T00:00:00');
             const today = new Date();
@@ -574,138 +498,36 @@
             return { total, prepared, missing, progress, status, statusClasses };
         }
 
-        // Toggles
-        function toggleGlobalDocument(docId, checked) {
+        // Make functions global for inline handlers
+        window.toggleGlobalDocument = function (docId, checked) {
             const doc = state.globalDocs.find(d => d.id === docId);
             if (doc) doc.completed = checked;
             saveState();
             render();
-        }
+        };
 
-        function toggleSpecificDocument(uniId, docId, checked) {
+        window.toggleSpecificDocument = function (uniId, docId, checked) {
             const uni = state.universities.find(u => u.id === uniId);
             const doc = uni.documents.find(d => d.id === docId);
             if (doc) doc.completed = checked;
             saveState();
             render();
-        }
+        };
 
-        function toggleSubmitted(uniId) {
+        window.toggleSubmitted = function (uniId) {
             const uni = state.universities.find(u => u.id === uniId);
             if (uni) uni.submitted = !uni.submitted;
             saveState();
             render();
-        }
+        };
 
-        function updateNotes(uniId, val) {
+        window.updateNotes = function (uniId, val) {
             const uni = state.universities.find(u => u.id === uniId);
             if (uni) uni.notes = val;
             saveState();
-        }
+        };
 
         // Renders
-        function renderMetrics() {
-            let overallTotal = state.globalDocs.length, overallPrepared = state.globalDocs.filter(d => d.completed).length;
-            let submittedApps = 0;
-
-            state.universities.forEach(uni => {
-                overallTotal += uni.documents.length;
-                overallPrepared += uni.documents.filter(d => d.completed).length;
-                if (uni.submitted) submittedApps++;
-            });
-
-            document.getElementById('universitiesTrackedMetric').textContent = state.universities.length;
-            document.getElementById('preparedDocumentsMetric').textContent = `${overallPrepared} / ${overallTotal}`;
-            document.getElementById('submittedApplicationsMetric').textContent = `${submittedApps} / ${state.universities.length}`;
-        }
-
-        function renderUrgentDeadlines() {
-            let all = [];
-            state.universities.forEach(uni => {
-                if (uni.submitted) return;
-                uni.timeline.forEach(evt => {
-                    if (evt.id === 'app_deadline' || evt.id === 'doc_deadline') {
-                        const days = getDaysUntil(evt.date);
-                        if (days >= 0) all.push({ uni: uni.shortName, label: evt.label, date: evt.date, days });
-                    }
-                });
-            });
-
-            all.sort((a, b) => a.days - b.days);
-            const top = all.slice(0, 3);
-            const container = document.getElementById('globalDeadlinesContainer');
-
-            if (top.length === 0) {
-                container.innerHTML = `<div class="col-span-3 text-[13px] text-secondary">No upcoming deadlines found.</div>`;
-                return;
-            }
-
-            container.innerHTML = top.map(d => {
-                let priorityColor = 'bg-gray-100 text-secondary border-gray-200';
-                let priorityLabel = 'NORMAL';
-
-                if (d.days < 10) {
-                    priorityColor = 'bg-danger/10 text-danger border-danger/20';
-                    priorityLabel = 'URGENT';
-                } else if (d.days <= 30) {
-                    priorityColor = 'bg-warning/10 text-warning border-warning/20';
-                    priorityLabel = 'WARNING';
-                }
-
-                return `
-                    <div class="bg-card border border-edge rounded-xl p-5 shadow-soft flex flex-col justify-between hover:shadow-hover transition-all">
-                        <div class="flex justify-between items-start mb-3">
-                            <div>
-                                <span class="text-[12px] font-bold text-secondary tracking-wider">${d.uni}</span>
-                                <h4 class="text-[14px] font-medium text-primary mt-0.5">${d.label}</h4>
-                            </div>
-                            <span class="text-[10px] font-bold px-2 py-1 rounded border ${priorityColor}">${priorityLabel}</span>
-                        </div>
-                        <div class="flex items-center justify-between mt-4 border-t border-edge/50 pt-3">
-                            <span class="text-[13px] text-secondary">${formatDateLong(d.date)}</span>
-                            <span class="text-[13px] font-medium ${d.days < 10 ? 'text-danger' : (d.days <= 30 ? 'text-warning' : 'text-primary')}">
-                                ${d.days} days left
-                            </span>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function renderProgressTable() {
-            const tableBody = document.getElementById('progressTableBody');
-            tableBody.innerHTML = state.universities.map(university => {
-                const stats = getUniversityStats(university);
-                const barColor = stats.progress === 100 ? 'bg-success' : stats.progress > 0 ? 'bg-accent' : 'bg-secondary';
-
-                const appDeadlineDate = university.timeline.find(t => t.id === 'app_deadline')?.date;
-
-                return `
-                    <div class="grid grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-gray-50/50 transition-colors">
-                        <div class="col-span-4 flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-md bg-appbg border border-edge flex items-center justify-center text-primary font-bold text-[12px]">${university.shortName.slice(0, 2)}</div>
-                            <div>
-                                <p class="text-[14px] font-medium text-primary">${university.name}</p>
-                                <p class="text-[12px] text-secondary">${stats.prepared} of ${stats.total} total ready</p>
-                            </div>
-                        </div>
-                        <div class="col-span-4 pr-8">
-                            <div class="flex items-center gap-3 w-full">
-                                <div class="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                                    <div class="h-full ${barColor} rounded-full" style="width: ${stats.progress}%"></div>
-                                </div>
-                                <span class="text-[12px] text-secondary w-10 text-right">${stats.progress}%</span>
-                            </div>
-                        </div>
-                        <div class="col-span-2">
-                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[12px] font-medium ${stats.statusClasses}">${stats.status}</span>
-                        </div>
-                        <div class="col-span-2 text-right text-[13px] text-secondary">${appDeadlineDate ? formatDateLong(appDeadlineDate) : 'Not set'}</div>
-                    </div>
-                `;
-            }).join('');
-        }
-
         function renderAppTimelines() {
             const tbody = document.getElementById('appTimelinesBody');
             tbody.innerHTML = state.universities.map(uni => {
@@ -750,13 +572,13 @@
             }
 
             list.innerHTML = filtered.map(doc => `
-                <li class="group flex items-center gap-3 px-3 py-2.5 hover:bg-appbg/80 rounded-lg cursor-pointer transition-colors select-none">
+                <label class="group flex items-center gap-3 px-3 py-2.5 hover:bg-appbg/80 rounded-lg cursor-pointer transition-colors select-none">
                     <div class="relative flex items-center justify-center w-[18px] h-[18px] rounded-[4px] border ${doc.completed ? 'bg-accent border-accent' : 'bg-white border-gray-300 group-hover:border-accent'} transition-colors shrink-0">
-                        <input type="checkbox" class="sr-only" ${doc.completed ? 'checked' : ''} onchange="toggleGlobalDocument('${doc.id}', this.checked)">
+                        <input type="checkbox" class="absolute opacity-0 w-full h-full cursor-pointer" ${doc.completed ? 'checked' : ''} onchange="toggleGlobalDocument('${doc.id}', this.checked)">
                         ${doc.completed ? '<i data-lucide="check" class="w-3 h-3 text-white"></i>' : ''}
                     </div>
                     <span class="text-[13px] ${doc.completed ? 'text-secondary line-through' : 'text-primary font-medium'}">${doc.label}</span>
-                </li>
+                </label>
             `).join('');
         }
 
@@ -900,9 +722,6 @@
         }
 
         function render() {
-            renderMetrics();
-            renderUrgentDeadlines();
-            renderProgressTable();
             renderAppTimelines();
             renderGlobalDocs(document.getElementById('searchInput').value);
             renderSpecificDocs(document.getElementById('searchInput').value);

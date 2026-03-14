@@ -40,6 +40,8 @@ The required document list appears mainly on **pages 13–15** of the guideline.
    * If not in English/Korean, requires notarized translation.
 7. **Financial Support Statement (Form 3)**
    * To be filled by the sponsor (e.g., parent).
+8. **Language Proficiency Agreement (Form 2)**
+   * Consent to follow university language requirements.
 
 ### B. Language Proficiency
 * **IELTS 5.5+** or **TOPIK Level 3+** is required for most departments.
@@ -90,14 +92,29 @@ KNU offers generous scholarships for the first semester based on language scores
 * **TOPIK Level 5+**: **Full Tuition Waiver**
 * **TOPIK Level 4**: **60% Tuition Waiver**
 
-> [!TIP]
-> Since you have **IELTS 7.5**, if you apply for a major on the **English Track**, you may be eligible for a **100% scholarship** for the first semester!
+> [!IMPORTANT]
+> Since you have **IELTS 7.5**, you are eligible for the **FULL SCHOLARSHIP (100% Tuition Waiver)** for your first semester if you apply to an English-track or specialized department!
 
 ---
 
-# 6. Evaluation Criteria
-* Most departments: **Document Review** (50%) + **Interview** (50%) OR just Document Review.
-* Arts/Sports: Practical test + Portfolio.
+# 6. Best 3 Departments for Your Profile (Ranked)
+
+⚠️ **Warning:** Computer Science & Electrical Engineering are **NOT** available with an IELTS-only application.
+
+### 1. The "Computer/Electronic" Alternative: Dept. of Advanced AI Engineering
+* **Location:** Samcheok Campus (Page 13)
+* **Why it fits:** The only KNU major allowing English-only (Category 1) while focused on Software and Robotics.
+* **Audit:** Method ① (Page 13) - Document review only. No interview.
+
+### 2. The "Mechanical" Alternative: Dept. of Mechanical Convergence Engineering
+* **Location:** Chuncheon Campus (Main Campus) (Page 11)
+* **Why it fits:** "Specialized Department" (◎) for international students. 
+* **Audit:** Method ② (Page 11) - Mandatory Interview. Use your **IELTS 7.5** to prove your academic potential and overcome your HSSC score.
+
+### 3. The "Future-Proof" Choice: Dept. of Battery Convergence Engineering
+* **Location:** Chuncheon Campus (Main Campus) (Page 11)
+* **Why it fits:** Covers EV batteries (Samsung/LG/SK sector)—high growth and high salary.
+* **Audit:** Method ② (Page 11) - Mandatory Interview. Advantageous for IELTS 7.5 holders.
 
 ---
 

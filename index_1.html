@@ -399,7 +399,7 @@
                 id: 'knu',
                 name: 'Kangwon National University',
                 shortName: 'KNU',
-                links: { portal: 'https://www.kangwon.ac.kr/english', guidelines: 'https://www.kangwon.ac.kr/english/selectBbsNttList.do?bbsNo=424&key=1392' },
+                links: { portal: 'https://ipsi3.uwayapply.com/2026/foreign/oiaknu/', guidelines: 'https://oiaknu.kangwon.ac.kr/app/board/attach/viewer.do?boardNo=1202&articleNo=551076&attachNo=588495' },
                 timeline: [
                     { id: 'open', label: 'Online Application', date: '2026-05-11' },
                     { id: 'app_deadline', label: 'Online App Deadline', date: '2026-06-12' },
@@ -410,11 +410,12 @@
                 ],
                 documents: [
                     { id: 'knu-form1', label: 'Form 1 — Application Form', category: 'administrative', info: 'Print from KNU portal after online entry.' },
+                    { id: 'knu-form2', label: 'Form 2 — Language Proficiency Agreement', category: 'language', info: 'Consent to language course requirements.' },
                     { id: 'knu-form3', label: 'Form 3 — Financial Support Statement', category: 'financial', info: 'Sponsor must pledge financial guarantee.' },
                     { id: 'knu-survey', label: 'KNU Applicant Survey', category: 'administrative', info: 'Required questionnaire for all international applicants.' }
                 ],
                 fee: '50,000 KRW',
-                notes: ''
+                notes: '#### ⚠️ Critical Department Warning\n**CS & Electrical Engineering** are NOT available for application with only IELTS at KNU.\n\n#### 🎓 Scholarship Status: ELIGIBLE\n**Full Scholarship (100% Waiver)** secured for 1st semester with your IELTS 7.5.\n\n#### 💡 Top Recommendations\n**1. Advanced AI Engineering (Samcheok)**\n• English-track (Category 1). Closest to CS/Electronics.\n• Screening: Document review only.\n\n**2. Mechanical Convergence (Chuncheon)**\n• Specialized for Int’l students. Mandatory interview (Advantage with IELTS 7.5).\n\n**3. Battery Convergence (Chuncheon)**\n• High-growth/High-salary. Mandatory interview.'
             }
         ];
         
@@ -903,7 +904,22 @@
             const container = document.getElementById('sidebarCountdowns');
             if (!container) return;
 
-            container.innerHTML = state.universities.map(uni => {
+            const sortedUnis = [...state.universities].sort((a, b) => {
+                const aOpen = getDaysUntil(a.timeline.find(e => e.id === 'open')?.date);
+                const aDue = getDaysUntil(a.timeline.find(e => e.id === 'app_deadline')?.date);
+                const bOpen = getDaysUntil(b.timeline.find(e => e.id === 'open')?.date);
+                const bDue = getDaysUntil(b.timeline.find(e => e.id === 'app_deadline')?.date);
+
+                const getVal = (open, due) => {
+                    if (open > 0) return open;
+                    if (due >= 0) return due;
+                    return 1000 + Math.abs(due);
+                };
+
+                return getVal(aOpen, aDue) - getVal(bOpen, bDue);
+            });
+
+            container.innerHTML = sortedUnis.map(uni => {
                 const openDate = uni.timeline.find(e => e.id === 'open')?.date;
                 const deadlineDate = uni.timeline.find(e => e.id === 'app_deadline')?.date;
                 

@@ -38,7 +38,7 @@ Below is a **structured breakdown for Jeonbuk National University (JBNU)**. Sinc
 
 # 3. Important Portal Links
 *   **Application Portal (Uway Apply):** [ipsi2.uwayapply.com/2026/foreign/jbnu/?CHA=3](https://ipsi2.uwayapply.com/2026/foreign/jbnu/?CHA=3)
-*   **Guidelines PDF (English):** [top.jbnu.ac.kr/sites/ioffice/file/2-1 English.pdf](https://top.jbnu.ac.kr/sites/ioffice/file/2-1%20English.pdf)
+*   **Guidelines PDF (English):** [top.jbnu.ac.kr/sites/ioffice/file/2-1English.pdf](https://top.jbnu.ac.kr/sites/ioffice/file/2-1English.pdf)
 
 ---
 
